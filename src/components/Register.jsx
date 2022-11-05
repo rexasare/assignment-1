@@ -8,6 +8,7 @@ import {
 } from './firebase';
 import './Register.css';
 import Loading from './Loading';
+import ErrorMessage from './ErrorMessage';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -22,9 +23,8 @@ const Register = () => {
   };
 
   useEffect(() => {
-    if (loading) {
-      <Loading />;
-    }
+    if (loading) <Loading />;
+    if (error) <ErrorMessage error={error} />;
     if (user) navigate('/dashboard');
   }, [user, loading]);
 
@@ -62,7 +62,7 @@ const Register = () => {
         </button>
 
         <div>
-          Already have an account? <Link to='/'>Login</Link> now.
+          Already have an account? <Link to='/login'>Login</Link> now.
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { auth, logInWithEmailAndPassword, signInWithGoogle } from './firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import './Login.css';
 import Loading from './Loading';
+import ErrorMessage from './ErrorMessage';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,9 +13,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) {
-      <Loading />;
-    }
+    if (loading) <Loading />;
+    if (error) <ErrorMessage error={error} />;
     if (user) navigate('/');
   }, [user, loading]);
 
@@ -43,9 +43,6 @@ const Login = () => {
         <button className='login__btn login__google' onClick={signInWithGoogle}>
           Login with Google
         </button>
-        <div>
-          <Link to='/reset'>Forgot Password</Link>
-        </div>
         <div>
           Don't have an account? <Link to='/register'>Register</Link> now.
         </div>

@@ -4,15 +4,16 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth, logout } from './firebase';
 import Loading from './Loading';
+import ErrorMessage from './ErrorMessage';
 
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) {
-      <Loading />;
-    }
+    if (loading) <Loading />;
+
+    if (error) <ErrorMessage error={error} />;
     if (!user) return navigate('/');
   }, [user, loading]);
 
